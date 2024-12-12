@@ -1,0 +1,6 @@
+@website_dangky_laodong_HostAddress = http://localhost:5156
+
+GET {{website_dangky_laodong_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,238 @@
+html body {
+    background-color: #e7ecf0;
+    font-family: 'Tahoma', sans-serif;
+}
+
+/* Sidebar */
+div.sidebar {
+    padding: 0;
+    position: sticky;
+    top: 70px;
+    background-color: #FFFFFF;
+    margin-left: -7px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    max-height: fit-content;
+}
+
+div.sidebar ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+div.sidebar a {
+    text-decoration: none;
+    color: #667580;
+    font-weight: 500;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    padding: 14px 15px;
+    border-bottom: solid 1px #e7ecf0;
+}
+
+div.sidebar ul li a i {
+    margin-right: 10px;
+}
+
+div.sidebar a:hover {
+    background-color: #FFFFFF;
+    color: #007bff;
+}
+
+div.sidebar a.active {
+    background-color: #FFFFFF;
+    color: #007bff;
+}
+
+/* Header */
+header.header {
+    padding: 8px 0;
+    background-color: #FFFFFF;
+    color: black;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+header.header .container {
+    max-width: 100%;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+header.header .logo img {
+    height: 40px;
+}
+
+header.header .search input {
+    border-radius: 20px;
+    border: 1px solid #ced4da;
+    width: 300px;
+    padding: 5px 15px;
+    font-size: 14px;
+}
+
+header.header .user-info {
+    font-size: 14px;
+    color: #667580;
+}
+
+header.header .user-info .dropdown-menu {
+    right: 0;
+    padding: 0;
+    border: 1px solid #ced4da;
+    border-radius: 0;
+}
+
+header.header .user-info .dropdown-menu a {
+    border-bottom: solid 1px #e7ecf0;
+    color: #667580;
+}
+
+header.header .user-info .dropdown-menu .dropdown-item {
+    font-size: 13px;
+    padding: 10px 15px;
+}
+
+header.header .user-info .dropdown-menu .dropdown-item:hover {
+    background-color: #e7ecf0;
+    color: #667580;
+}
+
+/* Main content */
+html body .main-content {
+    padding: 20px;
+    background-color: #FFFFFF;
+    margin-right: -7px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 15px;
+}
+
+html body .main-content h5 {
+    margin-bottom: 0;
+    font-weight: bold;
+    color: #578ebe;
+    font-size: 18px;
+}
+
+/* Table */
+html body .table-container {
+    padding-top: 15px;
+    overflow-x: auto;
+}
+
+html body .table-bordered {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+
+html body .table-bordered th {
+    color: #1da1f2;
+}
+
+html body .table-bordered td {
+    color: #667580;
+}
+
+html body .table-bordered th,
+html body .table-bordered td {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 14px;
+}
+
+html body .table-bordered th {
+    background-color: #f1f3f5;
+    font-weight: bold;
+}
+
+html body .table-bordered th[colspan] {
+    text-align: center;
+}
+
+/* Button */
+html body .btn-outline-primary {
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+html body .btn-outline-danger {
+    font-size: 12px;
+}
+
+/* Input */
+input.form-control,
+select.form-select {
+    border-radius: 0;
+}
+
+/* Select */
+html body .form-select {
+    border: 1px solid #ced4da;
+    border-radius: 0px;
+    color: #636e75;
+    font-size: 14px;
+    padding: 5px 15px;
+    background-color: #FFFFFF;
+    appearance: none;
+    width: 100%;
+    transition: box-shadow 0.3s;
+}
+
+html body .form-select::after {
+    content: "▼";
+    position: absolute;
+    right: 15px;
+    font-size: 10px;
+    color: #667580;
+    pointer-events: none;
+}
+
+html body .form-select:hover,
+html body .form-select:focus {
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+}
+
+html body .select-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+html body .form-label {
+    font-size: 14px;
+    color: #667580;
+}
+
+/* Modal */
+div .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+}
+
+div .modal.show {
+    z-index: 1050;
+}
+
+div .modal-content {
+    border-radius: 4px;
+    border: 1px solid #dee2e6;
+}
+
+div .modal-header {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
