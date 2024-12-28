@@ -3,24 +3,16 @@
   "WorkspaceRootPath": "C:\\DoAn2\\website-dangky-laodong-solution\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F1BD7EA3-3B96-4F49-BC20-1833DBED7998}|website-dangky-laodong\\website-dangky-laodong.csproj|c:\\doan2\\website-dangky-laodong-solution\\website-dangky-laodong\\repositories\\laodongloprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F1BD7EA3-3B96-4F49-BC20-1833DBED7998}|website-dangky-laodong\\website-dangky-laodong.csproj|solutionrelative:website-dangky-laodong\\repositories\\laodongloprepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F1BD7EA3-3B96-4F49-BC20-1833DBED7998}|website-dangky-laodong\\website-dangky-laodong.csproj|c:\\doan2\\website-dangky-laodong-solution\\website-dangky-laodong\\repositories\\khoarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1BD7EA3-3B96-4F49-BC20-1833DBED7998}|website-dangky-laodong\\website-dangky-laodong.csproj|solutionrelative:website-dangky-laodong\\repositories\\khoarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F1BD7EA3-3B96-4F49-BC20-1833DBED7998}|website-dangky-laodong\\website-dangky-laodong.csproj|c:\\doan2\\website-dangky-laodong-solution\\website-dangky-laodong\\services\\laodonglopservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F1BD7EA3-3B96-4F49-BC20-1833DBED7998}|website-dangky-laodong\\website-dangky-laodong.csproj|solutionrelative:website-dangky-laodong\\services\\laodonglopservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F1BD7EA3-3B96-4F49-BC20-1833DBED7998}|website-dangky-laodong\\website-dangky-laodong.csproj|c:\\doan2\\website-dangky-laodong-solution\\website-dangky-laodong\\services\\khoaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1BD7EA3-3B96-4F49-BC20-1833DBED7998}|website-dangky-laodong\\website-dangky-laodong.csproj|solutionrelative:website-dangky-laodong\\services\\khoaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F1BD7EA3-3B96-4F49-BC20-1833DBED7998}|website-dangky-laodong\\website-dangky-laodong.csproj|c:\\doan2\\website-dangky-laodong-solution\\website-dangky-laodong\\controllers\\laodonglopcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F1BD7EA3-3B96-4F49-BC20-1833DBED7998}|website-dangky-laodong\\website-dangky-laodong.csproj|solutionrelative:website-dangky-laodong\\controllers\\laodonglopcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F1BD7EA3-3B96-4F49-BC20-1833DBED7998}|website-dangky-laodong\\website-dangky-laodong.csproj|c:\\doan2\\website-dangky-laodong-solution\\website-dangky-laodong\\dtos\\pagedresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F1BD7EA3-3B96-4F49-BC20-1833DBED7998}|website-dangky-laodong\\website-dangky-laodong.csproj|solutionrelative:website-dangky-laodong\\dtos\\pagedresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F1BD7EA3-3B96-4F49-BC20-1833DBED7998}|website-dangky-laodong\\website-dangky-laodong.csproj|c:\\doan2\\website-dangky-laodong-solution\\website-dangky-laodong\\dtos\\laodonglopdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F1BD7EA3-3B96-4F49-BC20-1833DBED7998}|website-dangky-laodong\\website-dangky-laodong.csproj|solutionrelative:website-dangky-laodong\\dtos\\laodonglopdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F1BD7EA3-3B96-4F49-BC20-1833DBED7998}|website-dangky-laodong\\website-dangky-laodong.csproj|c:\\doan2\\website-dangky-laodong-solution\\website-dangky-laodong\\services\\laodongcanhanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F1BD7EA3-3B96-4F49-BC20-1833DBED7998}|website-dangky-laodong\\website-dangky-laodong.csproj|solutionrelative:website-dangky-laodong\\services\\laodongcanhanservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,67 +30,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PagedResult.cs",
-              "DocumentMoniker": "C:\\DoAn2\\website-dangky-laodong-solution\\website-dangky-laodong\\DTOs\\PagedResult.cs",
-              "RelativeDocumentMoniker": "website-dangky-laodong\\DTOs\\PagedResult.cs",
-              "ToolTip": "C:\\DoAn2\\website-dangky-laodong-solution\\website-dangky-laodong\\DTOs\\PagedResult.cs",
-              "RelativeToolTip": "website-dangky-laodong\\DTOs\\PagedResult.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "DocumentIndex": 0,
+              "Title": "KhoaRepository.cs",
+              "DocumentMoniker": "C:\\DoAn2\\website-dangky-laodong-solution\\website-dangky-laodong\\Repositories\\KhoaRepository.cs",
+              "RelativeDocumentMoniker": "website-dangky-laodong\\Repositories\\KhoaRepository.cs",
+              "ToolTip": "C:\\DoAn2\\website-dangky-laodong-solution\\website-dangky-laodong\\Repositories\\KhoaRepository.cs",
+              "RelativeToolTip": "website-dangky-laodong\\Repositories\\KhoaRepository.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAwAAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T09:26:22.584Z",
+              "WhenOpened": "2024-12-27T03:17:04.415Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "LaoDongLopService.cs",
-              "DocumentMoniker": "C:\\DoAn2\\website-dangky-laodong-solution\\website-dangky-laodong\\Services\\LaoDongLopService.cs",
-              "RelativeDocumentMoniker": "website-dangky-laodong\\Services\\LaoDongLopService.cs",
-              "ToolTip": "C:\\DoAn2\\website-dangky-laodong-solution\\website-dangky-laodong\\Services\\LaoDongLopService.cs",
-              "RelativeToolTip": "website-dangky-laodong\\Services\\LaoDongLopService.cs",
-              "ViewState": "AQIAABQAAAAAAAAAAAAAwB0AAAAJAAAA",
+              "Title": "KhoaService.cs",
+              "DocumentMoniker": "C:\\DoAn2\\website-dangky-laodong-solution\\website-dangky-laodong\\Services\\KhoaService.cs",
+              "RelativeDocumentMoniker": "website-dangky-laodong\\Services\\KhoaService.cs",
+              "ToolTip": "C:\\DoAn2\\website-dangky-laodong-solution\\website-dangky-laodong\\Services\\KhoaService.cs",
+              "RelativeToolTip": "website-dangky-laodong\\Services\\KhoaService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T04:33:25.574Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "LaoDongLopDTO.cs",
-              "DocumentMoniker": "C:\\DoAn2\\website-dangky-laodong-solution\\website-dangky-laodong\\DTOs\\LaoDongLopDTO.cs",
-              "RelativeDocumentMoniker": "website-dangky-laodong\\DTOs\\LaoDongLopDTO.cs",
-              "ToolTip": "C:\\DoAn2\\website-dangky-laodong-solution\\website-dangky-laodong\\DTOs\\LaoDongLopDTO.cs",
-              "RelativeToolTip": "website-dangky-laodong\\DTOs\\LaoDongLopDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T04:33:15.74Z",
+              "WhenOpened": "2024-12-27T03:16:54.384Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "LaoDongLopController.cs",
-              "DocumentMoniker": "C:\\DoAn2\\website-dangky-laodong-solution\\website-dangky-laodong\\Controllers\\LaoDongLopController.cs",
-              "RelativeDocumentMoniker": "website-dangky-laodong\\Controllers\\LaoDongLopController.cs",
-              "ToolTip": "C:\\DoAn2\\website-dangky-laodong-solution\\website-dangky-laodong\\Controllers\\LaoDongLopController.cs",
-              "RelativeToolTip": "website-dangky-laodong\\Controllers\\LaoDongLopController.cs",
-              "ViewState": "AQIAAAsAAAAAAAAAAAAQwBYAAAAJAAAA",
+              "Title": "LaoDongCaNhanService.cs",
+              "DocumentMoniker": "C:\\DoAn2\\website-dangky-laodong-solution\\website-dangky-laodong\\Services\\LaoDongCaNhanService.cs",
+              "RelativeDocumentMoniker": "website-dangky-laodong\\Services\\LaoDongCaNhanService.cs",
+              "ToolTip": "C:\\DoAn2\\website-dangky-laodong-solution\\website-dangky-laodong\\Services\\LaoDongCaNhanService.cs",
+              "RelativeToolTip": "website-dangky-laodong\\Services\\LaoDongCaNhanService.cs",
+              "ViewState": "AQIAAIMAAAAAAAAAAAAqwIwAAABRAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T04:33:07.399Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "LaoDongLopRepository.cs",
-              "DocumentMoniker": "C:\\DoAn2\\website-dangky-laodong-solution\\website-dangky-laodong\\Repositories\\LaoDongLopRepository.cs",
-              "RelativeDocumentMoniker": "website-dangky-laodong\\Repositories\\LaoDongLopRepository.cs",
-              "ToolTip": "C:\\DoAn2\\website-dangky-laodong-solution\\website-dangky-laodong\\Repositories\\LaoDongLopRepository.cs",
-              "RelativeToolTip": "website-dangky-laodong\\Repositories\\LaoDongLopRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAA0AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T04:32:57.641Z",
+              "WhenOpened": "2024-12-26T13:54:26.808Z",
               "EditorCaption": ""
             }
           ]

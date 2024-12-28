@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using website_dangky_laodong.Data;
 using website_dangky_laodong.Models;
 
@@ -10,9 +8,13 @@ namespace website_dangky_laodong.Repositories
     {
         Task<IEnumerable<LaoDongCaNhan>> GetAllAsync();
         Task<LaoDongCaNhan> GetByIdAsync(int id);
+        Task<IEnumerable<LaoDongCaNhan>> GetByWeekAsync(int maTuanLaoDong);
         Task<LaoDongCaNhan> AddAsync(LaoDongCaNhan ldCaNhan);
+        Task AddBulkAsync(IEnumerable<LaoDongCaNhan> danhSachLaoDongCaNhan);
         Task UpdateAsync(LaoDongCaNhan ldCaNhan);
-        Task DeleteAsync(LaoDongCaNhan ldCaNhan);
+        Task UpdateInfoAsync(LaoDongCaNhan ldCaNhan);
+        Task DeleteInfoAsync(LaoDongCaNhan ldCaNhan);
+        Task UnsubAsync(LaoDongCaNhan ldCaNhan);
     }
 
     public class LaoDongCaNhanRepository : ILaoDongCaNhanRepository
@@ -30,6 +32,7 @@ namespace website_dangky_laodong.Repositories
                 .Include(ld => ld.Lop)
                 .Include(ld => ld.TuanLaoDong)
                 .Include(ld => ld.NguoiDung)
+                .Include(ld => ld.KhuVucPhanCong)
                 .ToListAsync();
         }
 
@@ -39,7 +42,19 @@ namespace website_dangky_laodong.Repositories
                 .Include(ld => ld.Lop)
                 .Include(ld => ld.TuanLaoDong)
                 .Include(ld => ld.NguoiDung)
+                .Include(ld => ld.KhuVucPhanCong)
                 .FirstOrDefaultAsync(ld => ld.MaLDCaNhan == id);
+        }
+
+        public async Task<IEnumerable<LaoDongCaNhan>> GetByWeekAsync(int maTuanLaoDong)
+        {
+            return await _context.LaoDongCaNhans
+                .Where(ld => ld.MaTuanLaoDong == maTuanLaoDong)
+                .Include(ld => ld.Lop)
+                .Include(ld => ld.TuanLaoDong)
+                .Include(ld => ld.NguoiDung)
+                .Include(ld => ld.KhuVucPhanCong)
+                .ToListAsync();
         }
 
         public async Task<LaoDongCaNhan> AddAsync(LaoDongCaNhan ldCaNhan)
@@ -49,15 +64,33 @@ namespace website_dangky_laodong.Repositories
             return ldCaNhan;
         }
 
+        public async Task AddBulkAsync(IEnumerable<LaoDongCaNhan> danhSachLaoDongCaNhan)
+        {
+            await _context.LaoDongCaNhans.AddRangeAsync(danhSachLaoDongCaNhan);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task UpdateAsync(LaoDongCaNhan ldCaNhan)
         {
             _context.Entry(ldCaNhan).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(LaoDongCaNhan ldCaNhan)
+        public async Task UpdateInfoAsync(LaoDongCaNhan ldCaNhan)
         {
-            _context.LaoDongCaNhans.Remove(ldCaNhan);
+            _context.Entry(ldCaNhan).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteInfoAsync(LaoDongCaNhan ldCaNhan)
+        {
+            _context.Entry(ldCaNhan).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UnsubAsync(LaoDongCaNhan ldCaNhan)
+        {
+            _context.Entry(ldCaNhan).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
     }

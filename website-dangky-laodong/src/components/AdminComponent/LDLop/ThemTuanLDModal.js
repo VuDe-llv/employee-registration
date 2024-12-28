@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-// Hàm tính ngày thứ 2 của tuần dựa trên ngày bắt đầu
 const getWeekDays = (startDate) => {
   const start = new Date(startDate);
   const days = [];
-  for (let i = 0; i < 6; i++) { // Tính từ thứ 2 đến thứ 7
+  for (let i = 0; i < 6; i++) {
     const nextDay = new Date(start);
     nextDay.setDate(start.getDate() + i);
     days.push(nextDay);
@@ -20,32 +22,93 @@ const ThemTuanLDModal = ({ isVisible, onClose, onSave }) => {
     loaiLaoDong: "Lao động lớp",
   });
 
-  // Cập nhật ngày bắt đầu và ngày kết thúc
+  const [existingWeeks, setExistingWeeks] = useState([]);
+  const [ , setErrorMessage] = useState("");
+
+  useEffect(() => {
+    const fetchLatestWeek = async () => {
+      try {
+        const response = await axios.get("https://localhost:7086/api/TuanLaoDong");
+        const weeks = response.data.filter((week) => week.loaiLaoDong === "Lao động lớp");
+        setExistingWeeks(weeks);
+  
+        if (weeks.length === 0) {
+          // Không có tuần trong cơ sở dữ liệu với loại "Lao động lớp"
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            tenTuan: "Tuần 1",
+            ngayBatDau: "",
+            ngayKetThuc: "",
+          }));
+        } else {
+          // Có tuần trong cơ sở dữ liệu với loại "Lao động lớp"
+          const latestWeek = weeks
+            .sort((a, b) => {
+              const weekNumberA = parseInt(a.tenTuan.replace("Tuần", "").trim(), 10);
+              const weekNumberB = parseInt(b.tenTuan.replace("Tuần", "").trim(), 10);
+              return weekNumberB - weekNumberA;
+            })[0];
+  
+          const latestStartDate = new Date(latestWeek.ngayBatDau);
+          const nextWeekStartDate = new Date(latestStartDate);
+          nextWeekStartDate.setDate(latestStartDate.getDate() + 8);
+  
+          const nextWeekEndDate = new Date(nextWeekStartDate);
+          nextWeekEndDate.setDate(nextWeekStartDate.getDate() + 5);
+  
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            tenTuan: `Tuần ${parseInt(latestWeek.tenTuan.replace("Tuần", "").trim(), 10) + 1}`,
+            ngayBatDau: nextWeekStartDate.toISOString().split("T")[0],
+            ngayKetThuc: nextWeekEndDate.toISOString().split("T")[0],
+          }));
+        }
+      } catch (error) {
+        console.error("Có lỗi khi lấy tuần lao động:", error);
+      }
+    };
+  
+    if (isVisible) {
+      fetchLatestWeek();
+    }
+  }, [isVisible]);  
+
   const handleDateChange = (e) => {
     const { value, name } = e.target;
-    setFormData((prevFormData) => {
-      const updatedFormData = {
-        ...prevFormData,
-        [name]: value,
-      };
-
-      if (name === "ngayBatDau") {
-        const startDate = new Date(value);
-        const days = getWeekDays(startDate);
-
-        updatedFormData.ngayKetThuc = days[days.length - 1].toISOString().split("T")[0];
-      }
-
-      return updatedFormData;
-    });
+    if (!existingWeeks.length) {
+      setFormData((prevFormData) => {
+        const updatedFormData = {
+          ...prevFormData,
+          [name]: value,
+        };
+  
+        if (name === "ngayBatDau") {
+          const startDate = new Date(value);
+          const days = getWeekDays(startDate);
+  
+          updatedFormData.ngayKetThuc = days[days.length - 1].toISOString().split("T")[0];
+        }
+  
+        return updatedFormData;
+      });
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const isNameExist = existingWeeks.some((week) => week.tenTuan === formData.tenTuan);
+    if (isNameExist) {
+      toast.error("Tên tuần lao động đã tồn tại. Vui lòng chọn tên khác.");
+      return;
+    } else {
+      setErrorMessage("");
+    }
+
     if (!formData.loaiLaoDong) {
       formData.loaiLaoDong = "Lao động lớp";
     }
     onSave(formData);
+    toast.success("Thêm tuần lao động thành công!");
   };
 
   const handleChange = (e) => {
@@ -87,6 +150,7 @@ const ThemTuanLDModal = ({ isVisible, onClose, onSave }) => {
                         value={formData.tenTuan}
                         onChange={handleChange}
                         required
+                        readOnly
                       />
                     </div>
                   </div>
@@ -100,6 +164,7 @@ const ThemTuanLDModal = ({ isVisible, onClose, onSave }) => {
                         value={formData.ngayBatDau}
                         onChange={handleDateChange}
                         required
+                        readOnly={existingWeeks.length > 0}
                       />
                     </div>
                     <div className="col-md-6 mb-3">
@@ -116,10 +181,10 @@ const ThemTuanLDModal = ({ isVisible, onClose, onSave }) => {
                     </div>
                   </div>
                   <div className="d-flex justify-content-end">
-                    <button type="button" className="btn btn-secondary me-2" onClick={onClose}>
+                    <button type="button" className="btn btn-secondary btn-sm me-2" onClick={onClose}>
                       Hủy
                     </button>
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="btn btn-primary btn-sm">
                       Lưu
                     </button>
                   </div>

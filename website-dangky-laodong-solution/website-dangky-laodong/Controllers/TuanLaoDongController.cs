@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using website_dangky_laodong.DTOs;
 using website_dangky_laodong.Services;
 

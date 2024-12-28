@@ -11,6 +11,8 @@ namespace website_dangky_laodong.Services
         Task<NguoiDungDTO> AddAsync(NguoiDungDTO nguoiDungDTO);
         Task<bool> UpdateAsync(string id, NguoiDungDTO nguoiDungDTO);
         Task<bool> DeleteAsync(string id);
+        Task<NguoiDungDTO> LoginAsync(string maNguoiDung, string matKhau);
+        Task<bool> ChangePasswordAsync(string maNguoiDung, string oldMatKhau, string newMatKhau);
     }
 
     public class NguoiDungService : INguoiDungService
@@ -54,13 +56,14 @@ namespace website_dangky_laodong.Services
 
         public async Task<NguoiDungDTO> AddAsync(NguoiDungDTO nguoiDungDTO)
         {
+            // Tự động gán mật khẩu là mã người dùng
             var user = new NguoiDung
             {
                 MaNguoiDung = nguoiDungDTO.MaNguoiDung,
                 TenNguoiDung = nguoiDungDTO.TenNguoiDung,
                 SoDienThoai = nguoiDungDTO.SoDienThoai,
                 Email = nguoiDungDTO.Email,
-                MatKhau = "", // Default password
+                MatKhau = nguoiDungDTO.MaNguoiDung,
                 VaiTro = nguoiDungDTO.VaiTro,
                 MaLop = nguoiDungDTO.MaLop
             };
@@ -99,6 +102,40 @@ namespace website_dangky_laodong.Services
             if (user == null) return false;
 
             await _repository.DeleteAsync(user);
+            return true;
+        }
+
+        public async Task<NguoiDungDTO> LoginAsync(string maNguoiDung, string matKhau)
+        {
+            var user = await _repository.GetByIdAsync(maNguoiDung);
+            if (user == null || user.MatKhau != matKhau)
+                return null;
+
+            return new NguoiDungDTO
+            {
+                MaNguoiDung = user.MaNguoiDung,
+                TenNguoiDung = user.TenNguoiDung,
+                SoDienThoai = user.SoDienThoai,
+                Email = user.Email,
+                VaiTro = user.VaiTro,
+                MaLop = user.MaLop
+            };
+        }
+
+        public async Task<bool> ChangePasswordAsync(string maNguoiDung, string oldMatKhau, string newMatKhau)
+        {
+            var user = await _repository.GetByIdAsync(maNguoiDung);
+            if (user == null) return false;
+
+            // Kiểm tra mật khẩu hiện tại có đúng không
+            if (user.MatKhau != oldMatKhau)
+            {
+                return false; // Mật khẩu hiện tại không đúng
+            }
+
+            // Cập nhật mật khẩu mới
+            user.MatKhau = newMatKhau;
+            await _repository.UpdateAsync(user);
             return true;
         }
     }

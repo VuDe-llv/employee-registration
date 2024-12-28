@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using website_dangky_laodong.Data;
 using website_dangky_laodong.Models;
 

@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
+import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 import LDLopModal from './LDLopModal';
 
 const LDLopList = ({ data, onEdit, onDelete }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedRow, setSelectedRow] = useState(null);
+  const [deleteData, setDeleteData] = useState(null);
 
-  const handleDeleteClick = (row) => {
-    setSelectedRow(row);
+  const handleDeleteClick = (item) => {
+    setDeleteData(item);
     setIsModalVisible(true);
   };
 
   const handleConfirmDelete = () => {
-    onDelete(selectedRow.id);
-    setIsModalVisible(false);
-  };
+    if (deleteData) {
+      onDelete(deleteData);
+      setDeleteData(null);
+      setIsModalVisible(false);
+    }
+  };  
 
   const handleCancelDelete = () => {
     setIsModalVisible(false);
@@ -42,7 +47,7 @@ const LDLopList = ({ data, onEdit, onDelete }) => {
               <th>Tên lớp</th>
               <th>Người đăng ký</th>
               <th>Số điện thoại</th>
-              <th>Thời gian đăng ký</th>
+              <th>Khu vực phân công</th>
               <th>Tùy chọn</th>
             </tr>
           </thead>
@@ -63,22 +68,38 @@ const LDLopList = ({ data, onEdit, onDelete }) => {
                       <td>{row.tenLop}</td>
                       <td>{row.tenNguoiDung}</td>
                       <td>{row.soDienThoai}</td>
-                      <td>{row.thoiGianDangKy}</td>
+                      <td>{row.tenKhuVuc}</td>
                       <td>
+                        {/* <button
+                          type="button"
+                          className="btn btn-outline-secondary btn-sm me-2"
+                          data-tooltip-id="info-tooltip"
+                          data-tooltip-content="Chi tiết"
+                          onClick={() => onEdit(row)}
+                        >
+                          <i className="fas fa-circle-info"></i>
+                        </button> */}
                         <button
                           type="button"
                           className="btn btn-outline-primary btn-sm"
+                          data-tooltip-id="edit-tooltip"
+                          data-tooltip-content="Chỉnh sửa"
                           onClick={() => onEdit(row)}
                         >
-                          Sửa
+                        <i className="fas fa-pen"></i>
                         </button>
                         <button
                           type="button"
-                          className="btn btn-outline-danger btn-sm"
+                          className="btn btn-outline-danger btn-sm ms-2"
+                          data-tooltip-id="delete-tooltip"
+                          data-tooltip-content="Xóa"
                           onClick={() => handleDeleteClick(row)}
                         >
-                          Xóa
+                          <i className="fa-solid fa-trash-can"></i>
                         </button>
+                        <Tooltip id="info-tooltip" place="right" />
+                        <Tooltip id="edit-tooltip" place="right" />
+                        <Tooltip id="delete-tooltip" place="right" />
                       </td>
                     </tr>
                   ))
@@ -97,22 +118,22 @@ const LDLopList = ({ data, onEdit, onDelete }) => {
 
       {/* Modal xác nhận xóa */}
       <LDLopModal
-        title="Xác nhận xóa"
+        title="Xác nhận xóa dữ liệu"
         isVisible={isModalVisible}
         onClose={handleCancelDelete}
       >
-        <p>Bạn có chắc chắn muốn xóa lớp học này không?</p>
+        <p>Bạn có chắc chắn muốn xóa thông tin này không ? Thông tin sẽ được đặt lại về trạng thái ban đầu.</p>
         <div className="d-flex justify-content-end">
           <button
             type="button"
-            className="btn btn-secondary me-2"
+            className="btn btn-secondary btn-sm me-2"
             onClick={handleCancelDelete}
           >
             Hủy
           </button>
           <button
             type="button"
-            className="btn btn-danger"
+            className="btn btn-danger btn-sm"
             onClick={handleConfirmDelete}
           >
             Xác nhận

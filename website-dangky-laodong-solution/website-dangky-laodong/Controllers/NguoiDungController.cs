@@ -55,5 +55,32 @@ namespace website_dangky_laodong.Controllers
 
             return Ok(new { message = "Xóa thành công." });
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
+        {
+            var user = await _service.LoginAsync(loginDTO.MaNguoiDung, loginDTO.MatKhau);
+
+            if (user == null)
+                return Unauthorized(new { message = "Tài khoản hoặc mật khẩu không đúng." });
+
+            return Ok(new
+            {
+                message = "Đăng nhập thành công.",
+                user
+            });
+        }
+
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] DoiMatKhauDTO doiMatMhauDTO)
+        {
+            var result = await _service.ChangePasswordAsync(doiMatMhauDTO.MaNguoiDung, doiMatMhauDTO.OldMatKhau, doiMatMhauDTO.NewMatKhau);
+            if (!result)
+            {
+                return BadRequest(new { message = "Mật khẩu hiện tại không đúng hoặc không thể đổi mật khẩu." });
+            }
+
+            return Ok(new { message = "Đổi mật khẩu thành công." });
+        }
     }
 }

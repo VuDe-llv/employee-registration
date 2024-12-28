@@ -3,6 +3,11 @@ html body {
     font-family: 'Tahoma', sans-serif;
 }
 
+/* Dropdown */
+button.dropdown-item {
+    color: #667580;
+}
+
 /* Sidebar */
 div.sidebar {
     padding: 0;
@@ -161,17 +166,96 @@ html body .table-bordered th[colspan] {
 /* Button */
 html body .btn-outline-primary {
     font-size: 12px;
-    margin-right: 5px;
+}
+
+html body .btn-outline-success {
+    font-size: 12px;
 }
 
 html body .btn-outline-danger {
     font-size: 12px;
 }
 
+html body .btn-outline-secondary {
+    font-size: 12px;
+}
+
+html body .btn-primary {
+    font-size: 12px;
+}
+
+html body .btn-primary:hover {
+    font-size: 12px;
+    background-color: #dee2e6;
+    border-color: #dee2e6;
+    color: #007bff;
+}
+
+html body .btn-success {
+    font-size: 12px;
+}
+
+html body .btn-success:hover {
+    font-size: 12px;
+    background-color: #dee2e6;
+    border-color: #dee2e6;
+    color: #198754;
+}
+
+html body .btn-secondary {
+    font-size: 12px;
+}
+
+html body .btn-secondary:hover {
+    font-size: 12px;
+    background-color: #dee2e6;
+    border-color: #dee2e6;
+    color: #6c757d;
+}
+
+html body .btn-danger {
+    font-size: 12px;
+}
+
+html body .btn-danger:hover {
+    font-size: 12px;
+    background-color: #dee2e6;
+    border-color: #dee2e6;
+    color: #dc3545;
+}
+
 /* Input */
 input.form-control,
 select.form-select {
     border-radius: 0;
+}
+
+.search {
+    position: relative;
+}
+
+.search input {
+    padding-right: 30px;
+}
+
+.search i.fa-search {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #878787;
+}
+
+/* Label */
+div label.week-name {
+    font-size: 14px;
+    color: #667580;
+}
+
+div label.form-check-label {
+    font-size: 14px;
+    color: #667580;
 }
 
 /* Select */

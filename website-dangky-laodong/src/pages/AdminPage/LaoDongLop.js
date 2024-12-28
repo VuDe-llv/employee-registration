@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import LDLopManager from '../../components/AdminComponent/LDLop/LDLopManager';
 import ThemTuanLDModal from '../../components/AdminComponent/LDLop/ThemTuanLDModal';
 
@@ -9,9 +11,8 @@ const LaoDongLop = () => {
   const handleThemTuanLD = (weekData) => {
     axios.post("https://localhost:7086/api/TuanLaoDong", weekData)
       .then(response => {
-        const { ngayBatDau, ngayKetThuc, maTuanLaoDong } = response.data; // Đảm bảo API trả về `maTuanLaoDong`
+        const { ngayBatDau, ngayKetThuc, maTuanLaoDong } = response.data;
         
-        // Gọi API để thêm dữ liệu hàng loạt vào LaoDongLops
         return axios.post("https://localhost:7086/api/LaoDongLop/bulk-insert", null, {
           params: { 
             ngayBatDau,
@@ -21,11 +22,12 @@ const LaoDongLop = () => {
         });
       })
       .then(() => {
-        alert("Dữ liệu LaoDongLops đã được thêm thành công!");
         setThemTuanLDModalVisible(false);
+        window.location.reload();
       })
       .catch(error => {
         console.error("Có lỗi xảy ra:", error);
+        toast.error("Có lỗi xảy ra khi thêm dữ liệu!");
       });
   };  
 

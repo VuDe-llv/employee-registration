@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useNavigate } from "react-router-dom";
+import { UserContext } from '../../../context/UserContext';
+import { SearchContext } from '../../../context/SearchContext';
 import logo from '../../../assets/sv_logo_dashboard.png';
 import noAvatar from '../../../assets/no_avatar.png';
 
 const AdminHeader = () => {
+  const { user, logout } = useContext(UserContext);
+  const { searchTerm, setSearchTerm } = useContext(SearchContext);
+  const navigate = useNavigate();
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
   return (
     <header className="header">
       <div className="container d-flex justify-content-between align-items-center">
@@ -18,7 +29,10 @@ const AdminHeader = () => {
             className="form-control"
             placeholder="Tìm kiếm..."
             aria-label="Tìm kiếm"
+            value={searchTerm}
+            onChange={handleSearchChange}
           />
+          <i className="fas fa-search"></i>
         </div>
 
         {/* User info dropdown */}
@@ -29,9 +43,9 @@ const AdminHeader = () => {
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            Lại Lâm Vũ
+            {user?.tenNguoiDung || 'Không xác định'}
             <img
-              src={noAvatar}
+              src={user?.avatar || noAvatar}
               alt="Ảnh Profile"
               className="rounded-circle ms-2"
               style={{ width: '30px', height: '30px' }}
@@ -39,14 +53,17 @@ const AdminHeader = () => {
           </span>
           <ul className="dropdown-menu" aria-labelledby="userDropdown">
             <li>
-              <a className="dropdown-item" href="#">
-                Thông tin cá nhân
-              </a>
+              <button
+                className="dropdown-item"
+                onClick={() => navigate("/dangkylaodong/lao-dong-ca-nhan")}
+              >
+                Trang người dùng
+              </button>
             </li>
             <li>
-              <a className="dropdown-item" href="#">
+              <button className="dropdown-item" onClick={logout}>
                 Đăng xuất
-              </a>
+              </button>
             </li>
           </ul>
         </div>

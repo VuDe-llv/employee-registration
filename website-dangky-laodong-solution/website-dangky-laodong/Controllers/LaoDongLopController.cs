@@ -16,9 +16,9 @@ namespace website_dangky_laodong.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(int page = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAll()
         {
-            var ldLops = await _service.GetPagedAsync(page, pageSize);
+            var ldLops = await _service.GetAllAsync();
             return Ok(ldLops);
         }
 
@@ -72,14 +72,43 @@ namespace website_dangky_laodong.Controllers
             return Ok(new { message = "Cập nhật thành công." });
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpPut("info/{id}")]
+        public async Task<IActionResult> UpdateInfo(int id, LaoDongLopDTO ldLopDTO)
         {
-            var deleted = await _service.DeleteAsync(id);
+            if (id != ldLopDTO.MaLDLop)
+                return BadRequest(new { message = "Mã lao động lớp không khớp với đường dẫn." });
+
+            var updated = await _service.UpdateInfoAsync(id, ldLopDTO);
+            if (!updated)
+                return NotFound(new { message = "Không tìm thấy lao động lớp." });
+
+            return Ok(new { message = "Cập nhật thành công." });
+        }
+
+        [HttpPut("deleteinfo/{id}")]
+        public async Task<IActionResult> Delete(int id, LaoDongLopDTO ldLopDTO)
+        {
+            if (id != ldLopDTO.MaLDLop)
+                return BadRequest(new { message = "Mã lao động lớp không khớp với đường dẫn." });
+
+            var deleted = await _service.DeleteInfoAsync(id, ldLopDTO);
             if (!deleted)
                 return NotFound(new { message = "Không tìm thấy lao động lớp." });
 
             return Ok(new { message = "Xóa thành công." });
+        }
+
+        [HttpPut("unsub/{id}")]
+        public async Task<IActionResult> Unsub(int id, LaoDongLopDTO ldLopDTO)
+        {
+            if (id != ldLopDTO.MaLDLop)
+                return BadRequest(new { message = "Mã lao động lớp không khớp với đường dẫn." });
+
+            var deleted = await _service.UnsubAsync(id, ldLopDTO);
+            if (!deleted)
+                return NotFound(new { message = "Không tìm thấy lao động lớp." });
+
+            return Ok(new { message = "Hủy thành công." });
         }
     }
 }

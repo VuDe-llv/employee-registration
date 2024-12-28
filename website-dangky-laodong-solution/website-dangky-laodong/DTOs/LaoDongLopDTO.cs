@@ -10,5 +10,6 @@
         public string? MaNguoiDung { get; set; }
         public string? TrangThai { get; set; }
         public int? MaTuanLaoDong { get; set; }
+        public int? MaKhuVuc { get; set; }
     }
 }

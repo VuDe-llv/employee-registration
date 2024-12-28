@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("website-dangky-laodong")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a8e3500c81e29d34c011512045f939f2b6e321a7")]
 [assembly: System.Reflection.AssemblyProductAttribute("website-dangky-laodong")]
 [assembly: System.Reflection.AssemblyTitleAttribute("website-dangky-laodong")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

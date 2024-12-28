@@ -11,8 +11,10 @@
         public string? TrangThai { get; set; }
 
         public int? MaTuanLaoDong { get; set; }
+        public int? MaKhuVuc { get; set; }
         public TuanLaoDong TuanLaoDong { get; set; }
         public NguoiDung NguoiDung { get; set; }
         public Lop Lop { get; set; }
+        public KhuVucPhanCong KhuVucPhanCong { get; set; }
     }
 }

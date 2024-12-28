@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const LDLopForm = ({ selectedItem, onSave, onCancel }) => {
+const LDLopForm = ({ selectedItem, onSave, onCancel, khuvucs }) => {
   const [formData, setFormData] = useState({
     ngayLaoDong: '',
     buoiLaoDong: '',
@@ -8,6 +8,8 @@ const LDLopForm = ({ selectedItem, onSave, onCancel }) => {
     tenNguoiDung: '',
     soDienThoai: '',
     thoiGianDangKy: '',
+    tenKhuVuc: '',
+    trangThai: '',
   });
 
   useEffect(() => {
@@ -19,6 +21,8 @@ const LDLopForm = ({ selectedItem, onSave, onCancel }) => {
         tenNguoiDung: selectedItem.tenNguoiDung,
         soDienThoai: selectedItem.soDienThoai,
         thoiGianDangKy: selectedItem.thoiGianDangKy,
+        maKhuVuc: selectedItem.maKhuVuc,
+        trangThai: selectedItem.trangThai,
       });
     }
   }, [selectedItem]);
@@ -36,71 +40,46 @@ const LDLopForm = ({ selectedItem, onSave, onCancel }) => {
     onSave(formData);
   };
 
+  const isTrangThaiDisabled = formData.trangThai === "Chưa đăng ký" || formData.trangThai === "Hoàn thành";
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
-        <label className="form-label">Ngày</label>
-        <input
-          type="text"
-          className="form-control"
-          name="ngayLaoDong"
-          value={formData.ngayLaoDong}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="mb-3">
-        <label className="form-label">Buổi</label>
+        <label htmlFor="tenLop" className="form-label">Khu vực phân công</label>
         <select
           className="form-select"
-          name="buoiLaoDong"
-          value={formData.buoiLaoDong}
+          id="maKhuVuc"
+          name="maKhuVuc"
+          value={formData.maKhuVuc}
           onChange={handleChange}
+          disabled={isTrangThaiDisabled}
         >
-          <option value="Sáng">Sáng</option>
-          <option value="Chiều">Chiều</option>
+          <option className="form-select-option" value="">Chọn khu vực</option>
+          {khuvucs.map((khuvuc) => (
+            <option key={khuvuc.maKhuVuc} value={khuvuc.maKhuVuc}>
+              {khuvuc.tenKhuVuc}
+            </option>
+          ))}
         </select>
       </div>
       <div className="mb-3">
-        <label className="form-label">Tên lớp</label>
-        <input
-          type="text"
-          className="form-control"
-          name="tenLop"
-          value={formData.tenLop}
+        <label htmlFor="trangThai" className="form-label">Trạng thái công việc</label>
+        <select
+          className="form-select"
+          id="trangThai"
+          name="trangThai"
+          value={formData.trangThai || ""}
           onChange={handleChange}
-        />
+          disabled={isTrangThaiDisabled}
+        >
+          <option value="Chưa đăng ký">Chưa đăng ký</option>
+          <option value="Đã đăng ký">Đã đăng ký</option>
+          <option value="Đang thực hiện">Đang thực hiện</option>
+          <option value="Hoàn thành">Hoàn thành</option>
+          <option value="Hoãn">Hoãn</option>
+        </select>
       </div>
-      <div className="mb-3">
-        <label className="form-label">Người đăng ký</label>
-        <input
-          type="text"
-          className="form-control"
-          name="tenNguoiDung"
-          value={formData.tenNguoiDung}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="mb-3">
-        <label className="form-label">Số điện thoại</label>
-        <input
-          type="text"
-          className="form-control"
-          name="soDienThoai"
-          value={formData.soDienThoai}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="mb-3">
-        <label className="form-label">Thời gian đăng ký</label>
-        <input
-          type="text"
-          className="form-control"
-          name="thoiGianDangKy"
-          value={formData.thoiGianDangKy}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="mb-3">
+      <div className="d-flex justify-content-end mb-3">
         <button type="submit" className="btn btn-primary">
           Lưu
         </button>

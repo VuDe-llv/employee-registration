@@ -25,6 +25,20 @@ namespace website_dangky_laodong.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "KhuVucPhanCongs",
+                columns: table => new
+                {
+                    MaKhuVuc = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TenKhuVuc = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    MoTaKhuVuc = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_KhuVucPhanCongs", x => x.MaKhuVuc);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TuanLaoDongs",
                 columns: table => new
                 {
@@ -57,7 +71,7 @@ namespace website_dangky_laodong.Migrations
                         column: x => x.MaKhoa,
                         principalTable: "Khoas",
                         principalColumn: "MaKhoa",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -80,7 +94,7 @@ namespace website_dangky_laodong.Migrations
                         column: x => x.MaLop,
                         principalTable: "Lops",
                         principalColumn: "MaLop",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -95,28 +109,36 @@ namespace website_dangky_laodong.Migrations
                     MaLop = table.Column<int>(type: "int", nullable: true),
                     MaNguoiDung = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     TrangThai = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    MaTuanLaoDong = table.Column<int>(type: "int", nullable: true)
+                    MaTuanLaoDong = table.Column<int>(type: "int", nullable: true),
+                    MaKhuVuc = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LaoDongCaNhans", x => x.MaLDCaNhan);
                     table.ForeignKey(
+                        name: "FK_LaoDongCaNhans_KhuVucPhanCongs_MaKhuVuc",
+                        column: x => x.MaKhuVuc,
+                        principalTable: "KhuVucPhanCongs",
+                        principalColumn: "MaKhuVuc",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
                         name: "FK_LaoDongCaNhans_Lops_MaLop",
                         column: x => x.MaLop,
                         principalTable: "Lops",
                         principalColumn: "MaLop",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_LaoDongCaNhans_NguoiDungs_MaNguoiDung",
                         column: x => x.MaNguoiDung,
                         principalTable: "NguoiDungs",
-                        principalColumn: "MaNguoiDung");
+                        principalColumn: "MaNguoiDung",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_LaoDongCaNhans_TuanLaoDongs_MaTuanLaoDong",
                         column: x => x.MaTuanLaoDong,
                         principalTable: "TuanLaoDongs",
                         principalColumn: "MaTuanLaoDong",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -131,29 +153,42 @@ namespace website_dangky_laodong.Migrations
                     MaLop = table.Column<int>(type: "int", nullable: true),
                     MaNguoiDung = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     TrangThai = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    MaTuanLaoDong = table.Column<int>(type: "int", nullable: true)
+                    MaTuanLaoDong = table.Column<int>(type: "int", nullable: true),
+                    MaKhuVuc = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LaoDongLops", x => x.MaLDLop);
                     table.ForeignKey(
+                        name: "FK_LaoDongLops_KhuVucPhanCongs_MaKhuVuc",
+                        column: x => x.MaKhuVuc,
+                        principalTable: "KhuVucPhanCongs",
+                        principalColumn: "MaKhuVuc",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
                         name: "FK_LaoDongLops_Lops_MaLop",
                         column: x => x.MaLop,
                         principalTable: "Lops",
                         principalColumn: "MaLop",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_LaoDongLops_NguoiDungs_MaNguoiDung",
                         column: x => x.MaNguoiDung,
                         principalTable: "NguoiDungs",
-                        principalColumn: "MaNguoiDung");
+                        principalColumn: "MaNguoiDung",
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_LaoDongLops_TuanLaoDongs_MaTuanLaoDong",
                         column: x => x.MaTuanLaoDong,
                         principalTable: "TuanLaoDongs",
                         principalColumn: "MaTuanLaoDong",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LaoDongCaNhans_MaKhuVuc",
+                table: "LaoDongCaNhans",
+                column: "MaKhuVuc");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LaoDongCaNhans_MaLop",
@@ -169,6 +204,11 @@ namespace website_dangky_laodong.Migrations
                 name: "IX_LaoDongCaNhans_MaTuanLaoDong",
                 table: "LaoDongCaNhans",
                 column: "MaTuanLaoDong");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LaoDongLops_MaKhuVuc",
+                table: "LaoDongLops",
+                column: "MaKhuVuc");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LaoDongLops_MaLop",
@@ -204,6 +244,9 @@ namespace website_dangky_laodong.Migrations
 
             migrationBuilder.DropTable(
                 name: "LaoDongLops");
+
+            migrationBuilder.DropTable(
+                name: "KhuVucPhanCongs");
 
             migrationBuilder.DropTable(
                 name: "NguoiDungs");

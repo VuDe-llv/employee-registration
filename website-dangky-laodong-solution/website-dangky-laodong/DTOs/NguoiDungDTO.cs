@@ -7,6 +7,7 @@
         public string? SoDienThoai { get; set; }
         public string? Email { get; set; }
         public string? VaiTro { get; set; }
+        public string? MatKhau { get; set; }
         public int? MaLop { get; set; }
     }
 }

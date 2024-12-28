@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const LDLopForm = ({ selectedItem, onSave, onCancel }) => {
   const [formData, setFormData] = useState({
@@ -11,15 +12,40 @@ const LDLopForm = ({ selectedItem, onSave, onCancel }) => {
   });
 
   useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+      setFormData((prevData) => ({
+        ...prevData,
+        maLop: storedUser.maLop || '',
+        maNguoiDung: storedUser.maNguoiDung || '',
+        tenNguoiDung: storedUser.tenNguoiDung || '',
+        soDienThoai: storedUser.soDienThoai || '',
+      }));
+
+      const fetchLop = async () => {
+        try {
+          const response = await axios.get(`https://localhost:7086/api/Lop/${storedUser.maLop}`);
+          setFormData((prevData) => ({
+            ...prevData,
+            tenLop: response.data.tenLop || '',
+          }));
+        } catch (error) {
+          console.error("Có lỗi xảy ra khi lấy thông tin lớp:", error);
+        }
+      };
+      if (storedUser.maLop) {
+        fetchLop();
+      }
+    }
+
     if (selectedItem) {
-      setFormData({
+      setFormData((prevData) => ({
+        ...prevData,
         ngayLaoDong: selectedItem.ngayLaoDong,
         buoiLaoDong: selectedItem.buoiLaoDong,
         tenLop: selectedItem.tenLop,
-        tenNguoiDung: selectedItem.tenNguoiDung,
-        soDienThoai: selectedItem.soDienThoai,
         thoiGianDangKy: selectedItem.thoiGianDangKy,
-      });
+      }));
     }
   }, [selectedItem]);
 
@@ -39,35 +65,24 @@ const LDLopForm = ({ selectedItem, onSave, onCancel }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
-        <label className="form-label">Ngày</label>
-        <input
-          type="text"
-          className="form-control"
-          name="ngayLaoDong"
-          value={formData.ngayLaoDong}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="mb-3">
         <label className="form-label">Buổi</label>
-        <select
-          className="form-select"
+        <input
+          className="form-control"
           name="buoiLaoDong"
           value={formData.buoiLaoDong}
           onChange={handleChange}
-        >
-          <option value="Sáng">Sáng</option>
-          <option value="Chiều">Chiều</option>
-        </select>
+          readOnly
+        />
       </div>
       <div className="mb-3">
         <label className="form-label">Tên lớp</label>
         <input
-          type="text"
+          type="tenLop"
           className="form-control"
           name="tenLop"
           value={formData.tenLop}
           onChange={handleChange}
+          readOnly
         />
       </div>
       <div className="mb-3">
@@ -78,6 +93,7 @@ const LDLopForm = ({ selectedItem, onSave, onCancel }) => {
           name="tenNguoiDung"
           value={formData.tenNguoiDung}
           onChange={handleChange}
+          readOnly
         />
       </div>
       <div className="mb-3">
@@ -90,23 +106,13 @@ const LDLopForm = ({ selectedItem, onSave, onCancel }) => {
           onChange={handleChange}
         />
       </div>
-      <div className="mb-3">
-        <label className="form-label">Thời gian đăng ký</label>
-        <input
-          type="text"
-          className="form-control"
-          name="thoiGianDangKy"
-          value={formData.thoiGianDangKy}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="mb-3">
-        <button type="submit" className="btn btn-primary">
+      <div className="d-flex justify-content-end">
+        <button type="submit" className="btn btn-primary me-2">
           Lưu
         </button>
         <button
           type="button"
-          className="btn btn-secondary ms-2"
+          className="btn btn-secondary"
           onClick={onCancel}
         >
           Hủy

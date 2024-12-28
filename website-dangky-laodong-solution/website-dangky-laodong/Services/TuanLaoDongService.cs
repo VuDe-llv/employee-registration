@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using website_dangky_laodong.DTOs;
+﻿using website_dangky_laodong.DTOs;
 using website_dangky_laodong.Models;
 using website_dangky_laodong.Repositories;
 

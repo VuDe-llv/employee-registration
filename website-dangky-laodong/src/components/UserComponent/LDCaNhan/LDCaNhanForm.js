@@ -1,25 +1,51 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const LDCaNhanForm = ({ selectedItem, onSave, onCancel }) => {
   const [formData, setFormData] = useState({
-    date: '',
-    session: '',
-    className: '',
-    name: '',
-    phone: '',
-    registrationTime: '',
+    ngayLaoDong: '',
+    buoiLaoDong: '',
+    tenLop: '',
+    tenNguoiDung: '',
+    soDienThoai: '',
+    thoiGianDangKy: '',
   });
 
   useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+      setFormData((prevData) => ({
+        ...prevData,
+        maLop: storedUser.maLop || '',
+        maNguoiDung: storedUser.maNguoiDung || '',
+        tenNguoiDung: storedUser.tenNguoiDung || '',
+        soDienThoai: storedUser.soDienThoai || '',
+      }));
+
+      const fetchLop = async () => {
+        try {
+          const response = await axios.get(`https://localhost:7086/api/Lop/${storedUser.maLop}`);
+          setFormData((prevData) => ({
+            ...prevData,
+            tenLop: response.data.tenLop || '',
+          }));
+        } catch (error) {
+          console.error("Có lỗi xảy ra khi lấy thông tin lớp:", error);
+        }
+      };
+      if (storedUser.maLop) {
+        fetchLop();
+      }
+    }
+
     if (selectedItem) {
-      setFormData({
-        date: selectedItem.date,
-        session: selectedItem.session,
-        className: selectedItem.className,
-        name: selectedItem.name,
-        phone: selectedItem.phone,
-        registrationTime: selectedItem.registrationTime,
-      });
+      setFormData((prevData) => ({
+        ...prevData,
+        ngayLaoDong: selectedItem.ngayLaoDong,
+        buoiLaoDong: selectedItem.buoiLaoDong,
+        tenLop: selectedItem.tenLop,
+        thoiGianDangKy: selectedItem.thoiGianDangKy,
+      }));
     }
   }, [selectedItem]);
 
@@ -39,35 +65,24 @@ const LDCaNhanForm = ({ selectedItem, onSave, onCancel }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
-        <label className="form-label">Ngày</label>
-        <input
-          type="text"
-          className="form-control"
-          name="date"
-          value={formData.date}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="mb-3">
         <label className="form-label">Buổi</label>
-        <select
-          className="form-select"
-          name="session"
-          value={formData.session}
+        <input
+          className="form-control"
+          name="buoiLaoDong"
+          value={formData.buoiLaoDong}
           onChange={handleChange}
-        >
-          <option value="Sáng">Sáng</option>
-          <option value="Chiều">Chiều</option>
-        </select>
+          readOnly
+        />
       </div>
       <div className="mb-3">
         <label className="form-label">Tên lớp</label>
         <input
-          type="text"
+          type="tenLop"
           className="form-control"
-          name="className"
-          value={formData.className}
+          name="tenLop"
+          value={formData.tenLop}
           onChange={handleChange}
+          readOnly
         />
       </div>
       <div className="mb-3">
@@ -75,9 +90,10 @@ const LDCaNhanForm = ({ selectedItem, onSave, onCancel }) => {
         <input
           type="text"
           className="form-control"
-          name="name"
-          value={formData.name}
+          name="tenNguoiDung"
+          value={formData.tenNguoiDung}
           onChange={handleChange}
+          readOnly
         />
       </div>
       <div className="mb-3">
@@ -85,28 +101,18 @@ const LDCaNhanForm = ({ selectedItem, onSave, onCancel }) => {
         <input
           type="text"
           className="form-control"
-          name="phone"
-          value={formData.phone}
+          name="soDienThoai"
+          value={formData.soDienThoai}
           onChange={handleChange}
         />
       </div>
-      <div className="mb-3">
-        <label className="form-label">Thời gian đăng ký</label>
-        <input
-          type="text"
-          className="form-control"
-          name="registrationTime"
-          value={formData.registrationTime}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="mb-3">
-        <button type="submit" className="btn btn-primary">
+      <div className="d-flex justify-content-end">
+        <button type="submit" className="btn btn-primary me-2">
           Lưu
         </button>
         <button
           type="button"
-          className="btn btn-secondary ms-2"
+          className="btn btn-secondary"
           onClick={onCancel}
         >
           Hủy

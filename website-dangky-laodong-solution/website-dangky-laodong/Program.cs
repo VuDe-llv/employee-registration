@@ -27,6 +27,7 @@ builder.Services.AddScoped<ILaoDongLopRepository, LaoDongLopRepository>();
 builder.Services.AddScoped<ILopRepository, LopRepository>();
 builder.Services.AddScoped<INguoiDungRepository, NguoiDungRepository>();
 builder.Services.AddScoped<ITuanLaoDongRepository, TuanLaoDongRepository>();
+builder.Services.AddScoped<IKhuVucPhanCongRepository, KhuVucPhanCongRepository>();
 
 // Register services
 builder.Services.AddScoped<IKhoaService, KhoaService>();
@@ -35,6 +36,7 @@ builder.Services.AddScoped<ILaoDongLopService, LaoDongLopService>();
 builder.Services.AddScoped<ILopService, LopService>();
 builder.Services.AddScoped<INguoiDungService, NguoiDungService>();
 builder.Services.AddScoped<ITuanLaoDongService, TuanLaoDongService>();
+builder.Services.AddScoped<IKhuVucPhanCongService, KhuVucPhanCongService>();
 
 // Add services to the container.
 builder.Services.AddControllers();

@@ -1,6 +1,6 @@
 import React from "react";
 
-const LDLopModal = ({ title, isVisible, onClose, children }) => {
+const LDCaNhanModal = ({ title, isVisible, onClose, children }) => {
   return (
     isVisible && (
       <>
@@ -29,4 +29,4 @@ const LDLopModal = ({ title, isVisible, onClose, children }) => {
   );
 };
 
-export default LDLopModal;
+export default LDCaNhanModal;

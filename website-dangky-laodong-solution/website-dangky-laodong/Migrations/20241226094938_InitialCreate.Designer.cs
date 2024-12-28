@@ -12,7 +12,7 @@ using website_dangky_laodong.Data;
 namespace website_dangky_laodong.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241210051937_InitialCreate")]
+    [Migration("20241226094938_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -42,6 +42,27 @@ namespace website_dangky_laodong.Migrations
                     b.ToTable("Khoas");
                 });
 
+            modelBuilder.Entity("website_dangky_laodong.Models.KhuVucPhanCong", b =>
+                {
+                    b.Property<int>("MaKhuVuc")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaKhuVuc"));
+
+                    b.Property<string>("MoTaKhuVuc")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("TenKhuVuc")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("MaKhuVuc");
+
+                    b.ToTable("KhuVucPhanCongs");
+                });
+
             modelBuilder.Entity("website_dangky_laodong.Models.LaoDongCaNhan", b =>
                 {
                     b.Property<int>("MaLDCaNhan")
@@ -53,6 +74,9 @@ namespace website_dangky_laodong.Migrations
                     b.Property<string>("BuoiLaoDong")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("MaKhuVuc")
+                        .HasColumnType("int");
 
                     b.Property<int?>("MaLop")
                         .HasColumnType("int");
@@ -75,6 +99,8 @@ namespace website_dangky_laodong.Migrations
 
                     b.HasKey("MaLDCaNhan");
 
+                    b.HasIndex("MaKhuVuc");
+
                     b.HasIndex("MaLop");
 
                     b.HasIndex("MaNguoiDung");
@@ -96,6 +122,9 @@ namespace website_dangky_laodong.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("MaKhuVuc")
+                        .HasColumnType("int");
+
                     b.Property<int?>("MaLop")
                         .HasColumnType("int");
 
@@ -116,6 +145,8 @@ namespace website_dangky_laodong.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("MaLDLop");
+
+                    b.HasIndex("MaKhuVuc");
 
                     b.HasIndex("MaLop");
 
@@ -212,20 +243,27 @@ namespace website_dangky_laodong.Migrations
 
             modelBuilder.Entity("website_dangky_laodong.Models.LaoDongCaNhan", b =>
                 {
+                    b.HasOne("website_dangky_laodong.Models.KhuVucPhanCong", "KhuVucPhanCong")
+                        .WithMany("LaoDongCaNhans")
+                        .HasForeignKey("MaKhuVuc")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("website_dangky_laodong.Models.Lop", "Lop")
                         .WithMany("LaoDongCaNhans")
                         .HasForeignKey("MaLop")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("website_dangky_laodong.Models.NguoiDung", "NguoiDung")
                         .WithMany("LaoDongCaNhans")
                         .HasForeignKey("MaNguoiDung")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("website_dangky_laodong.Models.TuanLaoDong", "TuanLaoDong")
                         .WithMany("LaoDongCaNhans")
                         .HasForeignKey("MaTuanLaoDong")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("KhuVucPhanCong");
 
                     b.Navigation("Lop");
 
@@ -236,20 +274,27 @@ namespace website_dangky_laodong.Migrations
 
             modelBuilder.Entity("website_dangky_laodong.Models.LaoDongLop", b =>
                 {
+                    b.HasOne("website_dangky_laodong.Models.KhuVucPhanCong", "KhuVucPhanCong")
+                        .WithMany("LaoDongLops")
+                        .HasForeignKey("MaKhuVuc")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("website_dangky_laodong.Models.Lop", "Lop")
                         .WithMany("LaoDongLops")
                         .HasForeignKey("MaLop")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("website_dangky_laodong.Models.NguoiDung", "NguoiDung")
                         .WithMany("LaoDongLops")
                         .HasForeignKey("MaNguoiDung")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("website_dangky_laodong.Models.TuanLaoDong", "TuanLaoDong")
                         .WithMany("LaoDongLops")
                         .HasForeignKey("MaTuanLaoDong")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("KhuVucPhanCong");
 
                     b.Navigation("Lop");
 
@@ -263,7 +308,7 @@ namespace website_dangky_laodong.Migrations
                     b.HasOne("website_dangky_laodong.Models.Khoa", "Khoa")
                         .WithMany("Lops")
                         .HasForeignKey("MaKhoa")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Khoa");
                 });
@@ -273,7 +318,7 @@ namespace website_dangky_laodong.Migrations
                     b.HasOne("website_dangky_laodong.Models.Lop", "Lop")
                         .WithMany("NguoiDungs")
                         .HasForeignKey("MaLop")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Lop");
                 });
@@ -281,6 +326,13 @@ namespace website_dangky_laodong.Migrations
             modelBuilder.Entity("website_dangky_laodong.Models.Khoa", b =>
                 {
                     b.Navigation("Lops");
+                });
+
+            modelBuilder.Entity("website_dangky_laodong.Models.KhuVucPhanCong", b =>
+                {
+                    b.Navigation("LaoDongCaNhans");
+
+                    b.Navigation("LaoDongLops");
                 });
 
             modelBuilder.Entity("website_dangky_laodong.Models.Lop", b =>

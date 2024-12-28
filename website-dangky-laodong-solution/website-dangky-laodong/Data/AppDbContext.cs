@@ -11,6 +11,7 @@ namespace website_dangky_laodong.Data
         public DbSet<TuanLaoDong> TuanLaoDongs { get; set; }
         public DbSet<LaoDongCaNhan> LaoDongCaNhans { get; set; }
         public DbSet<LaoDongLop> LaoDongLops { get; set; }
+        public DbSet<KhuVucPhanCong> KhuVucPhanCongs { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
@@ -28,7 +29,7 @@ namespace website_dangky_laodong.Data
                 entity.HasMany(k => k.Lops)
                       .WithOne(l => l.Khoa)
                       .HasForeignKey(l => l.MaKhoa)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.SetNull);
             });
 
             // **Cấu hình bảng Lớp**
@@ -40,17 +41,17 @@ namespace website_dangky_laodong.Data
                 entity.HasMany(l => l.NguoiDungs)
                       .WithOne(nd => nd.Lop)
                       .HasForeignKey(nd => nd.MaLop)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.SetNull);
 
                 entity.HasMany(l => l.LaoDongCaNhans)
                       .WithOne(ldcn => ldcn.Lop)
                       .HasForeignKey(ldcn => ldcn.MaLop)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.SetNull);
 
                 entity.HasMany(l => l.LaoDongLops)
                       .WithOne(ldl => ldl.Lop)
                       .HasForeignKey(ldl => ldl.MaLop)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.SetNull);
             });
 
             // **Cấu hình bảng Người Dùng**
@@ -66,12 +67,12 @@ namespace website_dangky_laodong.Data
                 entity.HasMany(nd => nd.LaoDongCaNhans)
                       .WithOne(ldcn => ldcn.NguoiDung)
                       .HasForeignKey(ldcn => ldcn.MaNguoiDung)
-                      .OnDelete(DeleteBehavior.NoAction);
+                      .OnDelete(DeleteBehavior.SetNull);
 
                 entity.HasMany(nd => nd.LaoDongLops)
                       .WithOne(ldl => ldl.NguoiDung)
                       .HasForeignKey(ldl => ldl.MaNguoiDung)
-                      .OnDelete(DeleteBehavior.NoAction);
+                      .OnDelete(DeleteBehavior.SetNull);
             });
 
             // **Cấu hình bảng Tuần Lao Động**
@@ -86,12 +87,12 @@ namespace website_dangky_laodong.Data
                 entity.HasMany(tld => tld.LaoDongCaNhans)
                       .WithOne(ldcn => ldcn.TuanLaoDong)
                       .HasForeignKey(ldcn => ldcn.MaTuanLaoDong)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.SetNull);
 
                 entity.HasMany(tld => tld.LaoDongLops)
                       .WithOne(ldl => ldl.TuanLaoDong)
                       .HasForeignKey(ldl => ldl.MaTuanLaoDong)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.SetNull);
             });
 
             // **Cấu hình bảng Lao Động Cá Nhân**
@@ -105,17 +106,17 @@ namespace website_dangky_laodong.Data
                 entity.HasOne(ldcn => ldcn.Lop)
                       .WithMany(l => l.LaoDongCaNhans)
                       .HasForeignKey(ldcn => ldcn.MaLop)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.SetNull);
 
                 entity.HasOne(ldcn => ldcn.NguoiDung)
                       .WithMany(nd => nd.LaoDongCaNhans)
                       .HasForeignKey(ldcn => ldcn.MaNguoiDung)
-                      .OnDelete(DeleteBehavior.NoAction);
+                      .OnDelete(DeleteBehavior.SetNull);
 
                 entity.HasOne(ldcn => ldcn.TuanLaoDong)
                       .WithMany(tld => tld.LaoDongCaNhans)
                       .HasForeignKey(ldcn => ldcn.MaTuanLaoDong)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.SetNull);
             });
 
             // **Cấu hình bảng Lao Động Lớp**
@@ -129,17 +130,35 @@ namespace website_dangky_laodong.Data
                 entity.HasOne(ldl => ldl.Lop)
                       .WithMany(l => l.LaoDongLops)
                       .HasForeignKey(ldl => ldl.MaLop)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.SetNull);
 
                 entity.HasOne(ldl => ldl.NguoiDung)
                       .WithMany(nd => nd.LaoDongLops)
                       .HasForeignKey(ldl => ldl.MaNguoiDung)
-                      .OnDelete(DeleteBehavior.NoAction);
+                      .OnDelete(DeleteBehavior.SetNull);
 
                 entity.HasOne(ldl => ldl.TuanLaoDong)
                       .WithMany(tld => tld.LaoDongLops)
                       .HasForeignKey(ldl => ldl.MaTuanLaoDong)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            // **Cấu hình bảng Khu Vực Phân Công**
+            modelBuilder.Entity<KhuVucPhanCong>(entity =>
+            {
+                entity.HasKey(kvpc => kvpc.MaKhuVuc);
+                entity.Property(kvpc => kvpc.TenKhuVuc).HasMaxLength(100);
+                entity.Property(kvpc => kvpc.MoTaKhuVuc).HasMaxLength(100);
+
+                entity.HasMany(kvpc => kvpc.LaoDongCaNhans)
+                      .WithOne(ldcn => ldcn.KhuVucPhanCong)
+                      .HasForeignKey(ldcn => ldcn.MaKhuVuc)
+                      .OnDelete(DeleteBehavior.SetNull);
+
+                entity.HasMany(kvpc => kvpc.LaoDongLops)
+                      .WithOne(ldl => ldl.KhuVucPhanCong)
+                      .HasForeignKey(ldl => ldl.MaKhuVuc)
+                      .OnDelete(DeleteBehavior.SetNull);
             });
 
             base.OnModelCreating(modelBuilder);

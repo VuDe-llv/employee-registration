@@ -6,14 +6,16 @@ namespace website_dangky_laodong.Repositories
 {
     public interface ILaoDongLopRepository
     {
-        Task<IEnumerable<LaoDongLop>> GetPagedAsync(int page, int pageSize);
         Task<IEnumerable<LaoDongLop>> GetAllAsync();
         Task<LaoDongLop> GetByIdAsync(int id);
         Task<LaoDongLop> AddAsync(LaoDongLop ldLop);
         Task AddBulkAsync(IEnumerable<LaoDongLop> danhSachLaoDongLop);
         Task UpdateAsync(LaoDongLop ldLop);
-        Task DeleteAsync(LaoDongLop ldLop);
+        Task UpdateInfoAsync(LaoDongLop ldLop);
+        Task DeleteInfoAsync(LaoDongLop ldLop);
+        Task UnsubAsync(LaoDongLop ldLop);
     }
+
     public class LaoDongLopRepository : ILaoDongLopRepository
     {
         private readonly AppDbContext _context;
@@ -23,23 +25,13 @@ namespace website_dangky_laodong.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<LaoDongLop>> GetPagedAsync(int page, int pageSize)
-        {
-            return await _context.LaoDongLops
-                .Include(ld => ld.Lop)
-                .Include(ld => ld.TuanLaoDong)
-                .Include(ld => ld.NguoiDung)
-                .Skip((page - 1) * pageSize) // Bỏ qua các bản ghi đã qua
-                .Take(pageSize) // Lấy số bản ghi theo trang
-                .ToListAsync();
-        }
-
         public async Task<IEnumerable<LaoDongLop>> GetAllAsync()
         {
             return await _context.LaoDongLops
                 .Include(ld => ld.Lop)
                 .Include(ld => ld.TuanLaoDong)
                 .Include(ld => ld.NguoiDung)
+                .Include(ld => ld.KhuVucPhanCong)
                 .ToListAsync();
         }
 
@@ -49,6 +41,7 @@ namespace website_dangky_laodong.Repositories
                 .Include(ld => ld.Lop)
                 .Include(ld => ld.TuanLaoDong)
                 .Include(ld => ld.NguoiDung)
+                .Include(ld => ld.KhuVucPhanCong)
                 .FirstOrDefaultAsync(ld => ld.MaLDLop == id);
         }
 
@@ -71,9 +64,21 @@ namespace website_dangky_laodong.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(LaoDongLop ldLop)
+        public async Task UpdateInfoAsync(LaoDongLop ldLop)
         {
-            _context.LaoDongLops.Remove(ldLop);
+            _context.Entry(ldLop).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteInfoAsync(LaoDongLop ldLop)
+        {
+            _context.Entry(ldLop).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UnsubAsync(LaoDongLop ldLop)
+        {
+            _context.Entry(ldLop).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
     }

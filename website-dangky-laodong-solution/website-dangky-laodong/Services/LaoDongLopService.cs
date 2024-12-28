@@ -6,13 +6,14 @@ namespace website_dangky_laodong.Services
 {
     public interface ILaoDongLopService
     {
-        Task<IEnumerable<LaoDongLop>> GetPagedAsync(int page, int pageSize);
         Task<IEnumerable<LaoDongLopDTO>> GetAllAsync();
         Task<LaoDongLopDTO> GetByIdAsync(int id);
         Task<LaoDongLopDTO> AddAsync(LaoDongLopDTO ldLopDTO);
         Task AddBulkAsync(DateTime ngayBatDau, DateTime ngayKetThuc, int maTuanLaoDong);
         Task<bool> UpdateAsync(int id, LaoDongLopDTO ldLopDTO);
-        Task<bool> DeleteAsync(int id);
+        Task<bool> UpdateInfoAsync(int id, LaoDongLopDTO ldLopDTO);
+        Task<bool> DeleteInfoAsync(int id, LaoDongLopDTO ldLopDTO);
+        Task<bool> UnsubAsync(int id, LaoDongLopDTO ldLopDTO);
     }
 
     public class LaoDongLopService : ILaoDongLopService
@@ -22,11 +23,6 @@ namespace website_dangky_laodong.Services
         public LaoDongLopService(ILaoDongLopRepository repository)
         {
             _repository = repository;
-        }
-
-        public async Task<IEnumerable<LaoDongLop>> GetPagedAsync(int page, int pageSize)
-        {
-            return await _repository.GetPagedAsync(page, pageSize);
         }
 
         public async Task<IEnumerable<LaoDongLopDTO>> GetAllAsync()
@@ -41,7 +37,8 @@ namespace website_dangky_laodong.Services
                 MaLop = ld.MaLop,
                 MaNguoiDung = ld.MaNguoiDung,
                 TrangThai = ld.TrangThai,
-                MaTuanLaoDong = ld.MaTuanLaoDong
+                MaTuanLaoDong = ld.MaTuanLaoDong,
+                MaKhuVuc = ld.MaKhuVuc
             });
         }
 
@@ -59,7 +56,8 @@ namespace website_dangky_laodong.Services
                 MaLop = ldLop.MaLop,
                 MaNguoiDung = ldLop.MaNguoiDung,
                 TrangThai = ldLop.TrangThai,
-                MaTuanLaoDong = ldLop.MaTuanLaoDong
+                MaTuanLaoDong = ldLop.MaTuanLaoDong,
+                MaKhuVuc = ldLop.MaKhuVuc
             };
         }
 
@@ -93,7 +91,8 @@ namespace website_dangky_laodong.Services
                 MaLop = addedLdLop.MaLop,
                 MaNguoiDung = addedLdLop.MaNguoiDung,
                 TrangThai = addedLdLop.TrangThai,
-                MaTuanLaoDong = addedLdLop.MaTuanLaoDong
+                MaTuanLaoDong = addedLdLop.MaTuanLaoDong,
+                MaKhuVuc = addedLdLop.MaKhuVuc
             };
         }
 
@@ -104,18 +103,18 @@ namespace website_dangky_laodong.Services
 
             while (currentDay <= ngayKetThuc)
             {
-                for (int i = 0; i < 8; i++) // Tạo 8 dòng cho mỗi ngày
+                for (int i = 0; i < 8; i++)
                 {
                     danhSachLaoDongLop.Add(new LaoDongLop
                     {
                         NgayLaoDong = currentDay,
-                        BuoiLaoDong = i < 4 ? "Sáng" : "Chiều", // 4 dòng buổi sáng, 4 dòng buổi chiều
+                        BuoiLaoDong = i < 4 ? "Sáng" : "Chiều",
                         MaTuanLaoDong = maTuanLaoDong,
-                        TrangThai = "Chưa thực hiện"
+                        TrangThai = "Chưa đăng ký"
                     });
                 }
 
-                currentDay = currentDay.AddDays(1); // Tăng ngày lên 1
+                currentDay = currentDay.AddDays(1);
             }
 
             await _repository.AddBulkAsync(danhSachLaoDongLop);
@@ -126,24 +125,55 @@ namespace website_dangky_laodong.Services
             var existingLdLop = await _repository.GetByIdAsync(id);
             if (existingLdLop == null) return false;
 
-            existingLdLop.NgayLaoDong = ldLopDTO.NgayLaoDong;
-            existingLdLop.BuoiLaoDong = ldLopDTO.BuoiLaoDong;
-            existingLdLop.ThoiGianDangKy = ldLopDTO.ThoiGianDangKy;
+            existingLdLop.ThoiGianDangKy = DateTime.Now;
             existingLdLop.MaLop = ldLopDTO.MaLop;
             existingLdLop.MaNguoiDung = ldLopDTO.MaNguoiDung;
             existingLdLop.TrangThai = ldLopDTO.TrangThai;
             existingLdLop.MaTuanLaoDong = ldLopDTO.MaTuanLaoDong;
+            existingLdLop.MaKhuVuc = ldLopDTO.MaKhuVuc;
 
             await _repository.UpdateAsync(existingLdLop);
             return true;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> UpdateInfoAsync(int id, LaoDongLopDTO ldLopDTO)
         {
-            var ldLop = await _repository.GetByIdAsync(id);
-            if (ldLop == null) return false;
+            var existinginfoLdLop = await _repository.GetByIdAsync(id);
+            if (existinginfoLdLop == null) return false;
 
-            await _repository.DeleteAsync(ldLop);
+            existinginfoLdLop.TrangThai = ldLopDTO.TrangThai;
+            existinginfoLdLop.MaKhuVuc = ldLopDTO.MaKhuVuc;
+
+            await _repository.UpdateInfoAsync(existinginfoLdLop);
+            return true;
+        }
+
+        public async Task<bool> DeleteInfoAsync(int id, LaoDongLopDTO ldLopDTO)
+        {
+            var deleteinfoLdLop = await _repository.GetByIdAsync(id);
+            if (deleteinfoLdLop == null) return false;
+
+            deleteinfoLdLop.MaLop = null;
+            deleteinfoLdLop.MaNguoiDung = null;
+            deleteinfoLdLop.ThoiGianDangKy = null;
+            deleteinfoLdLop.TrangThai = "Chưa đăng ký";
+            deleteinfoLdLop.MaKhuVuc = null;
+
+            await _repository.DeleteInfoAsync(deleteinfoLdLop);
+            return true;
+        }
+
+        public async Task<bool> UnsubAsync(int id, LaoDongLopDTO ldLopDTO)
+        {
+            var unsubLdLop = await _repository.GetByIdAsync(id);
+            if (unsubLdLop == null) return false;
+
+            unsubLdLop.MaLop = null;
+            unsubLdLop.MaNguoiDung = null;
+            unsubLdLop.ThoiGianDangKy = null;
+            unsubLdLop.TrangThai = "Chưa đăng ký";
+
+            await _repository.UnsubAsync(unsubLdLop);
             return true;
         }
     }
